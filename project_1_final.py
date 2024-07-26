@@ -266,11 +266,7 @@ def document_management():
             col1, col2 = st.columns(2)
             with col1:
                 if st.button(f"Delete {doc.file_name}", key=f"delete_{doc.id}"):
-                    os.remove(doc.file_path)
-                    db.delete(doc)
-                    db.commit()
-                    st.success(f"{doc.file_name} deleted")
-                    st.experimental_rerun()
+                    st.session_state['delete_doc'] = doc.id
             with col2:
                 if st.button(f"Replace {doc.file_name}", key=f"replace_{doc.id}"):
                     st.session_state['replace_doc'] = doc.id
