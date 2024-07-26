@@ -267,32 +267,34 @@ def document_management():
             with col1:
                 if st.button(f"Delete {doc.file_name}", key=f"delete_{doc.id}"):
                     st.session_state['delete_doc'] = doc.id
+                    st.success(f"{doc.file_name} deleted")
             with col2:
                 if st.button(f"Replace {doc.file_name}", key=f"replace_{doc.id}"):
                     st.session_state['replace_doc'] = doc.id
-
-        if 'replace_doc' in st.session_state:
-            doc_id = st.session_state['replace_doc']
-            replacement_file = st.file_uploader(f"Replace Document", type=["pdf", "docx"], key=f"replace_file_{doc_id}")
-            if replacement_file is not None:
-                if replacement_file.size > 2 * 1024 * 1024:
-                    st.error("File size should not exceed 2 MB")
-                else:
-                    doc_to_replace = db.query(Document).filter_by(id=doc_id).first()
-                    # Ensure the uploads directory exists
-                    os.makedirs("uploads", exist_ok=True)
-                    os.remove(doc_to_replace.file_path)
-                    new_file_name = replacement_file.name
-                    new_file_path = os.path.join("uploads", new_file_name)
-                    with open(new_file_path, "wb") as f:
-                        f.write(replacement_file.getbuffer())
-
-                    doc_to_replace.file_name = new_file_name
-                    doc_to_replace.file_path = new_file_path
-                    db.commit()
                     st.success("File replaced successfully")
-                    del st.session_state['replace_doc']
-                    st.experimental_rerun()
+
+        # if 'replace_doc' in st.session_state:
+        #     doc_id = st.session_state['replace_doc']
+        #     replacement_file = st.file_uploader(f"Replace Document", type=["pdf", "docx"], key=f"replace_file_{doc_id}")
+        #     if replacement_file is not None:
+        #         if replacement_file.size > 2 * 1024 * 1024:
+        #             st.error("File size should not exceed 2 MB")
+        #         else:
+        #             doc_to_replace = db.query(Document).filter_by(id=doc_id).first()
+        #             # Ensure the uploads directory exists
+        #             os.makedirs("uploads", exist_ok=True)
+        #             os.remove(doc_to_replace.file_path)
+        #             new_file_name = replacement_file.name
+        #             new_file_path = os.path.join("uploads", new_file_name)
+        #             with open(new_file_path, "wb") as f:
+        #                 f.write(replacement_file.getbuffer())
+
+        #             doc_to_replace.file_name = new_file_name
+        #             doc_to_replace.file_path = new_file_path
+        #             db.commit()
+        #             st.success("File replaced successfully")
+        #             del st.session_state['replace_doc']
+        #             st.experimental_rerun()
 
 def notifications():
     db = SessionLocal()
