@@ -312,8 +312,8 @@ def notifications():
 
 # ---------------------------------
 # Main application
-# for testing purposes
-st.session_state['user'] = {'id': 1, 'username': 'ashoka', 'email': 'ashokatk@gmail.com', 'is_admin': False} # Set to False for regular user testing
+# # for testing purposes
+# st.session_state['user'] = {'id': 1, 'username': 'ashoka', 'email': 'ashokatk@gmail.com', 'is_admin': False} # Set to False for regular user testing
 st.markdown("<h1 style='text-align: center; font-size: 24px;'>Hospital Accreditation Management System</h1>", unsafe_allow_html=True)
 page = st.sidebar.radio(" ", ["Home", "Dashboard"])
 if page == "Home":
