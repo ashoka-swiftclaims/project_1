@@ -8,6 +8,7 @@ import bcrypt
 import os
 import smtplib
 import streamlit as st
+import time
 
 st.set_page_config(page_title="Hospital Accreditation Management System")
 
