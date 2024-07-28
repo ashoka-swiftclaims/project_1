@@ -54,8 +54,7 @@ def create_user(db: Session, username: str, email: str, password: str, is_admin:
     try:
         db.commit()
         db.refresh(db_user)
-        # return db_user
-        return None
+        return db_user
     except IntegrityError:
         db.rollback()
         return None
@@ -135,10 +134,14 @@ def register():
             db = SessionLocal()
             user = create_user(db, username, email, password, is_admin)
             if user:
-                st.success("Registration successful")
-                # st.experimental_rerun()
-                time.sleep(1)
-                st.rerun()
+                try:
+                    st.success("Registration successful")
+                    # st.experimental_rerun()
+                    time.sleep(1)
+                    st.rerun()
+                except AttributeError as e:
+                    print(f"AttributeError: {e}")
+                    st.error("An error occurred. Please try again.")
             else:
                 st.error("Username or email already exists")
 
