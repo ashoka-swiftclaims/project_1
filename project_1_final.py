@@ -114,7 +114,9 @@ def login():
                     'is_admin': user.is_admin
                 }
                 st.success("Login successful")
-                st.experimental_rerun()
+                # st.experimental_rerun()
+                time.sleep(1)
+                st.rerun()
             else:
                 st.error("Invalid username or password")
 
@@ -133,7 +135,9 @@ def register():
             user = create_user(db, username, email, password, is_admin)
             if user:
                 st.success("Registration successful")
-                st.experimental_rerun()
+                # st.experimental_rerun()
+                time.sleep(1)
+                st.rerun()
             else:
                 st.error("Username or email already exists")
 
@@ -175,7 +179,9 @@ def manage_users():
             db.delete(user)
             db.commit()
             st.success(f"User {user.username} deleted")
-            st.experimental_rerun()
+            # st.experimental_rerun()
+            time.sleep(1)
+            st.rerun()
 
 def update_accreditation_status():
     db = SessionLocal()
@@ -270,12 +276,14 @@ def document_management():
                     st.success(f"{doc.file_name} deleted")
             with col2:
                 if st.button(f"Replace {doc.file_name}", key=f"replace_{doc.id}"):
-                    # os.remove(doc.file_path)
-                    # db.delete(doc)
-                    # db.commit()
-                    # st.success(f"{doc.file_name} deleted")
+                    os.remove(doc.file_path)
+                    db.delete(doc)
+                    db.commit()
+                    st.success(f"{doc.file_name} deleted")
                     # st.experimental_rerun()
-                    st.session_state['replace_doc'] = doc.id
+                    time.sleep(1)
+                    st.rerun()
+                    # st.session_state['replace_doc'] = doc.id
 
         if 'replace_doc' in st.session_state:
             doc_id = st.session_state['replace_doc']
@@ -298,7 +306,9 @@ def document_management():
                     db.commit()
                     st.success("File replaced successfully")
                     del st.session_state['replace_doc']
-                    st.experimental_rerun()
+                    # st.experimental_rerun()
+                    time.sleep(1)
+                    st.rerun()
 
 def notifications():
     db = SessionLocal()
