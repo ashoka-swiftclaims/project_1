@@ -133,6 +133,7 @@ def register():
         else:
             db = SessionLocal()
             user = create_user(db, username, email, password, is_admin)
+            st.success(user)
             if user:
                 st.success("Registration successful")
                 # st.experimental_rerun()
