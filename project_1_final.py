@@ -54,7 +54,8 @@ def create_user(db: Session, username: str, email: str, password: str, is_admin:
     try:
         db.commit()
         db.refresh(db_user)
-        return db_user
+        # return db_user
+        return None
     except IntegrityError:
         db.rollback()
         return None
@@ -133,7 +134,6 @@ def register():
         else:
             db = SessionLocal()
             user = create_user(db, username, email, password, is_admin)
-            st.success(user)
             if user:
                 st.success("Registration successful")
                 # st.experimental_rerun()
